@@ -1,0 +1,19 @@
+# Environment files (store secrets, API keys)
+.env
+
+# Virtual environment folder
+venv/
+__pycache__/
+
+# IDE/editor files
+.vscode/
+*.code-workspace
+
+# Python cache
+*.pyc
+*.pyo
+*.pyd
+
+# OS files
+.DS_Store
+Thumbs.db
