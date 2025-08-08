@@ -94,6 +94,13 @@ def main():
         with st.spinner("Getting GPT financial analysis..."):
             gpt_analysis = get_financial_summary(gpt_prompt)
 
+        # Debug output to verify GPT response
+        if not gpt_analysis:
+            st.error("GPT returned an empty response.")
+        else:
+            st.write("GPT raw output:")
+            st.write(gpt_analysis)
+
         st.subheader("GPT Analysis Summary")
         st.text_area("GPT Investment Analysis", gpt_analysis, height=400)
 
