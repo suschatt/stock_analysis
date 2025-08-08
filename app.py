@@ -67,53 +67,23 @@ def main():
         }
         plot_scores("Company Financial Scores", scores_dict)
 
-        # Show detailed breakdowns
-        st.subheader("Financial Health Breakdown")
-        st.json(fh_breakdown)
-
-        st.subheader("Buffett Score Breakdown")
-        st.json(buffett_breakdown)
-
-        st.subheader("Lynch Score Breakdown")
-        st.json(lynch_breakdown)
-
         # Local simple recommendation
         rec = simple_recommendation(overall_fh_score)
         st.markdown(f"### Simple Recommendation: **{rec}**")
 
-        # GPT prompt with explicit buy/hold/sell request
+        # New GPT prompt (independent analysis + technical analysis)
         gpt_prompt = f"""
-        Analyze the company {ticker} based on the provided financial scores and breakdowns.
+        You are an expert financial analyst. Conduct an independent due diligence analysis on the company {ticker}.
+        Consider fundamental financial health and also perform a technical analysis of the stock's recent market trends.
         Provide a detailed investment analysis covering strengths, weaknesses, risks, and opportunities.
-        Conclude with a clear recommendation: should an investor BUY, HOLD, or SELL the stock as of today, considering all financial aspects?
-
-        Financial Health Score: {overall_fh_score:.2f}/10
-        Buffett Score: {overall_buffett_score:.2f}/10
-        Lynch Score: {overall_lynch_score:.2f}/10
-
-        Balance Sheet Breakdown:
-        {fh_breakdown}
-
-        Buffett Breakdown:
-        {buffett_breakdown}
-
-        Lynch Breakdown:
-        {lynch_breakdown}
+        Conclude with a clear recommendation: BUY, HOLD, or SELL as of today.
         """
 
         with st.spinner("Getting GPT financial analysis..."):
-            gpt_analysis = get_financial_summary(
-                gpt_prompt,
-                overall_fh_score,
-                fh_breakdown,
-                overall_buffett_score,
-                buffett_breakdown,
-                overall_lynch_score,
-                lynch_breakdown,
-            )
+            gpt_analysis = get_financial_summary(gpt_prompt)
 
         st.subheader("GPT Analysis Summary")
-        st.text_area("GPT Investment Analysis", gpt_analysis, height=300)
+        st.text_area("GPT Investment Analysis", gpt_analysis, height=400)
 
 if __name__ == "__main__":
     main()
