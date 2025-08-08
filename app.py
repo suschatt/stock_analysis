@@ -63,17 +63,17 @@ def main():
             key_columns = [
                 "Date",
                 "Total Assets",
-                "Total Liab",
-                "Total Stockholder Equity",
-                "Cash",
                 "Long Term Debt",
-                "Debt_to_Equity",
-                "Current_Ratio",
-                "Cash_to_Assets"
+                "Debt_to_Equity"
             ]
             display_df = bs_df[[col for col in key_columns if col in bs_df.columns]].copy()
-            formatted_df = format_to_billions_with_dollar(display_df, [col for col in key_columns if col not in ["Date", "Debt_to_Equity", "Current_Ratio", "Cash_to_Assets"]])
-            # Show with horizontal scroll & fixed height
+
+            # Drop rows where all numeric columns are empty/NaN
+            financial_cols = [col for col in key_columns if col != "Date"]
+            display_df = display_df.dropna(subset=financial_cols, how='all')
+
+            formatted_df = format_to_billions_with_dollar(display_df, financial_cols)
+
             st.dataframe(formatted_df, width=1000, height=400)
         else:
             st.write("No relevant Balance Sheet data available.")
