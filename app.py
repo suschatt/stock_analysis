@@ -37,6 +37,16 @@ def plot_scores(title, scores_dict):
     
     st.pyplot(fig)
 
+def format_to_billions_with_dollar(df, cols):
+    def to_billions(x):
+        if pd.isna(x):
+            return ""
+        return f"${x / 1e9:.2f}B"
+    for col in cols:
+        if col in df.columns:
+            df[col] = df[col].apply(to_billions)
+    return df
+
 def main():
     st.title("Financial Health Dashboard")
 
@@ -50,7 +60,13 @@ def main():
 
         st.subheader("Balance Sheet Data")
         if bs_df is not None and not bs_df.empty:
-            st.dataframe(bs_df)
+            # Columns to format - adjust as per your actual columns
+            cols_to_format = [
+                "Total Assets", "Total Liab", "Total Stockholder Equity", "Cash", "Long Term Debt",
+                "Debt_to_Equity", "Current_Ratio", "Cash_to_Assets"
+            ]
+            formatted_bs_df = format_to_billions_with_dollar(bs_df.copy(), cols_to_format)
+            st.table(formatted_bs_df)
         else:
             st.write("No relevant Balance Sheet data available.")
 
