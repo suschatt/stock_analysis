@@ -2,7 +2,7 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path=r"C:\Users\PWQ\OneDrive - QlikTech Inc\Susmit Chatterjee's Personal Folder\Personal\stock_analysis\.env", override=True)
+load_dotenv()
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
