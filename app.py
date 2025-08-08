@@ -19,10 +19,22 @@ def plot_scores(title, scores_dict):
     labels = list(scores_dict.keys())
     scores = [scores_dict[k] for k in labels]
     fig, ax = plt.subplots()
-    ax.bar(labels, scores, color=['#1f77b4','#ff7f0e','#2ca02c'])
+    bars = ax.bar(labels, scores, color=['#1f77b4','#ff7f0e','#2ca02c'])
     ax.set_ylim(0, 10)
     ax.set_ylabel('Score (0-10)')
     ax.set_title(title)
+    
+    # Add score labels on top of bars
+    for bar in bars:
+        height = bar.get_height()
+        ax.text(
+            bar.get_x() + bar.get_width() / 2,
+            height + 0.1,
+            f'{height:.2f}',
+            ha='center',
+            va='bottom'
+        )
+    
     st.pyplot(fig)
 
 def main():
