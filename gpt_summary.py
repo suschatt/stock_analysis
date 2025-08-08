@@ -23,11 +23,7 @@ Please be concise but thorough, and finish with your recommendation.
         messages=[
             {"role": "system", "content": "You are a helpful financial assistant."},
             {"role": "user", "content": prompt},
-        ],
-        temperature=1,
-        max_completion_tokens=1000,
-        # verbosity="medium",        # Uncomment to test if supported
-        # reasoning_effort="medium", # Uncomment to test if supported
+        ]
     )
 
     try:

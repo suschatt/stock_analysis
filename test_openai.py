@@ -1,5 +1,14 @@
+from openai import OpenAI
 import os
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path=r"C:\Users\PWQ\OneDrive - QlikTech Inc\Susmit Chatterjee's Personal Folder\Personal\stock_analysis\.env", override=True)
-print("API Key from env:", os.getenv("OPENAI_API_KEY"))
+load_dotenv(override=True)
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+response = client.chat.completions.create(
+    model="gpt-5",
+    messages=[{"role": "user", "content": "Explain the basics of financial analysis."}]
+)
+
+print("Response content:", response.choices[0].message.content)
+
