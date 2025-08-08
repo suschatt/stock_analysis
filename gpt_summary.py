@@ -31,7 +31,9 @@ Please be concise but thorough, and finish with your recommendation.
                 {"role": "user", "content": prompt},
             ],
             temperature=0.6,
-            max_tokens=1000,
+            max_completion_tokens=1000,      # Updated parameter
+            verbosity="medium",              # Optional: detail level ('low', 'medium', 'high')
+            reasoning_effort="medium"        # Optional: reasoning depth ('minimal', 'low', 'medium', 'high')
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
