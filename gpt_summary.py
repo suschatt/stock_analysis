@@ -47,13 +47,11 @@ Please keep the analysis concise but thorough, and finish with your recommendati
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-5",
             messages=[
                 {"role": "system", "content": "You are a helpful financial assistant."},
                 {"role": "user", "content": prompt},
-            ],
-            temperature=0.7,
-            max_tokens=800,
+            ]
         )
         # Response content is accessed via .choices[0].message.content for new OpenAI SDK
         return response.choices[0].message.content.strip()
