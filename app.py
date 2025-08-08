@@ -60,13 +60,21 @@ def main():
 
         st.subheader("Balance Sheet Data")
         if bs_df is not None and not bs_df.empty:
-            # Columns to format - adjust as per your actual columns
-            cols_to_format = [
-                "Total Assets", "Total Liab", "Total Stockholder Equity", "Cash", "Long Term Debt",
-                "Debt_to_Equity", "Current_Ratio", "Cash_to_Assets"
+            key_columns = [
+                "Date",
+                "Total Assets",
+                "Total Liab",
+                "Total Stockholder Equity",
+                "Cash",
+                "Long Term Debt",
+                "Debt_to_Equity",
+                "Current_Ratio",
+                "Cash_to_Assets"
             ]
-            formatted_bs_df = format_to_billions_with_dollar(bs_df.copy(), cols_to_format)
-            st.table(formatted_bs_df)
+            display_df = bs_df[[col for col in key_columns if col in bs_df.columns]].copy()
+            formatted_df = format_to_billions_with_dollar(display_df, [col for col in key_columns if col not in ["Date", "Debt_to_Equity", "Current_Ratio", "Cash_to_Assets"]])
+            # Show with horizontal scroll & fixed height
+            st.dataframe(formatted_df, width=1000, height=400)
         else:
             st.write("No relevant Balance Sheet data available.")
 
